@@ -4,34 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kitchen Manager</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f1117">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Kitchen">
 <style>
 :root{
-  --bg:#0f1117;--bg2:#161b27;--bg3:#1e2535;--bg4:#252d3d;
-  --border:#2a3347;--border2:#334060;
-  --text:#e8edf5;--text2:#8b95a8;--text3:#5a6478;
-  --blue:#4a9eff;--blue-bg:#0d1f3c;--blue-border:#1a3a6e;
-  --green:#34d399;--green-bg:#052e1a;--green-border:#0a5c34;
-  --red:#f87171;--red-bg:#2d0f0f;--red-border:#5c1a1a;
-  --amber:#fbbf24;--amber-bg:#2a1a00;--amber-border:#5c3a00;
+  /* Benjamin Moore Color Trends 2026 palette */
+  --silhouette:#5c5250;       /* warm charcoal brown */
+  --raindance:#a3b3a8;        /* sage green */
+  --swisscoffee:#ece8dc;      /* warm off-white */
+  --firstcrush:#e3dac9;       /* warm beige */
+  --batik:#cbb4b3;            /* dusty pink */
+  --narragansett:#3f4f53;     /* deep teal */
+  --southwestpottery:#9c5b54; /* terracotta red */
+  --sherwoodtan:#b89a76;      /* tan */
+
+  --bg:#1c1a19;               /* near-black warm */
+  --bg2:#27231f;              /* card bg - warm dark brown */
+  --bg3:#332e29;              /* input bg */
+  --bg4:#3d3631;              /* hover bg */
+  --border:#473f38;
+  --border2:#5c5250;
+  --text:#ece8dc;             /* swiss coffee as main text */
+  --text2:#cbb4b3;            /* batik as secondary text */
+  --text3:#8a7a72;            /* muted brown-grey */
+
+  --blue:#a3b3a8;             /* raindance sage as accent */
+  --blue-bg:#2e3530;
+  --blue-border:#4a5950;
+
+  --green:#a3b3a8;            /* sage for "good" */
+  --green-bg:#2c332e;
+  --green-border:#46554a;
+
+  --red:#c17b73;              /* lighter southwest pottery for alerts */
+  --red-bg:#3a2723;
+  --red-border:#6b3f37;
+
+  --amber:#cbb4ad;            /* batik-ish for warnings */
+  --amber-bg:#3a302c;
+  --amber-border:#6b5650;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:var(--text);padding:1.25rem;min-height:100vh}
 .tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
 .tab{padding:9px 13px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s;white-space:nowrap}
 .tab:hover{color:var(--text)}
-.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab.active{color:var(--sherwoodtan);border-bottom-color:var(--sherwoodtan)}
 .pane{display:none}.pane.active{display:block}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.125rem;margin-bottom:.875rem}
 .card-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.875rem}
 label{font-size:11px;color:var(--text3);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
 input,select{width:100%;padding:8px 10px;border:1px solid var(--border2);border-radius:7px;font-size:13px;background:var(--bg3);color:var(--text);outline:none;transition:border-color .15s}
-input:focus,select:focus{border-color:var(--blue)}
+input:focus,select:focus{border-color:var(--sherwoodtan)}
 input::placeholder{color:var(--text3)}
 select option{background:var(--bg3)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
@@ -39,10 +61,10 @@ select option{background:var(--bg3)}
 .g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;align-items:end}
 .btn{padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;border-radius:7px;border:1px solid var(--border2);background:var(--bg3);color:var(--text);display:inline-flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
 .btn:hover{background:var(--bg4)}
-.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue)}
-.btn-blue:hover{background:#3a8eee}
-.btn-green{background:var(--green);color:#052e1a;border-color:var(--green);font-weight:700}
-.btn-green:hover{background:#2abf89}
+.btn-blue{background:var(--narragansett);color:var(--swisscoffee);border-color:var(--narragansett)}
+.btn-blue:hover{background:#324048}
+.btn-green{background:var(--silhouette);color:var(--swisscoffee);border-color:var(--silhouette);font-weight:700}
+.btn-green:hover{background:#6a605c}
 .btn-sm{padding:5px 10px;font-size:12px}
 .icon-btn{background:none;border:none;cursor:pointer;padding:4px 6px;border-radius:5px;font-size:14px;color:var(--text3);transition:all .15s;display:inline-flex;align-items:center}
 .icon-btn:hover.del{color:var(--red);background:var(--red-bg)}
@@ -54,17 +76,17 @@ td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(255,255,255,.018)}
 .badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600}
-.b-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
-.b-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
-.b-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
-.b-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
-.b-grey{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.b-blue{background:rgba(63,79,83,0.3);color:var(--raindance);border:1px solid var(--narragansett)}
+.b-green{background:rgba(163,179,168,0.15);color:var(--raindance);border:1px solid var(--raindance)}
+.b-amber{background:rgba(184,154,118,0.2);color:var(--sherwoodtan);border:1px solid var(--sherwoodtan)}
+.b-red{background:rgba(156,91,84,0.2);color:var(--southwestpottery);border:1px solid var(--southwestpottery)}
+.b-grey{background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
 .empty{text-align:center;color:var(--text3);padding:2rem;font-size:13px}
 hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 
 /* delivery product row — 6 cols + remove btn */
 .del-prod-row{display:grid;grid-template-columns:1fr 90px 80px 130px 90px 130px auto;gap:8px;align-items:end;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px}
-.price-incl-display{font-size:14px;font-weight:700;color:var(--green);padding:8px 0;min-height:36px}
+.price-incl-display{font-size:14px;font-weight:700;color:var(--raindance);padding:8px 0;min-height:36px}
 
 /* delivery log */
 .del-log-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:.875rem;overflow:hidden}
@@ -76,11 +98,16 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 .storage-row{display:grid;grid-template-columns:56px 1fr 100px 90px 90px 150px;gap:0;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);transition:background .15s}
 .storage-row:hover{background:var(--bg3)}
 .storage-row:last-child{border-bottom:none}
-.storage-row.priority{border-left:3px solid var(--amber)}
+.storage-row.priority{border-left:3px solid var(--sherwoodtan)}
 .sr-cell{padding:9px 10px;font-size:13px}
 .sr-move{display:flex;flex-direction:column;gap:1px}
 .min-inp{width:72px;padding:5px 7px;font-size:12px;text-align:center;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text)}
 .qty-inp-storage{width:80px;padding:5px 7px;font-size:12px;text-align:center;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text)}
+.sr-cell-avail,.sr-cell-min{text-align:center}
+.sr-control{display:inline-flex;align-items:center;gap:6px}
+.sr-unit{font-size:11px;color:var(--text3)}
+.m-lbl{display:none}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 
 /* recipe */
 .ing-row{display:grid;grid-template-columns:1fr 1fr 90px 90px auto;gap:8px;align-items:end;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px}
@@ -89,9 +116,9 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 .recipe-title{font-size:15px;font-weight:700}
 .recipe-sub{font-size:12px;color:var(--text2);margin-top:2px}
 .recipe-body{padding:12px 16px}.recipe-body.collapsed{display:none}.scale-bar.collapsed{display:none}
-.scale-bar{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--blue-bg);border-top:1px solid var(--blue-border);flex-wrap:wrap}
-.scale-bar label{color:var(--blue);font-size:11px;font-weight:600;white-space:nowrap;margin:0;text-transform:none;letter-spacing:0}
-.scale-inp{width:72px;background:var(--bg3);border-color:var(--blue-border);color:var(--blue);font-weight:700;text-align:center;padding:6px 8px}
+.scale-bar{display:flex;align-items:center;gap:10px;padding:11px 16px;background:rgba(63,79,83,0.25);border-top:1px solid var(--narragansett);flex-wrap:wrap}
+.scale-bar label{color:var(--raindance);font-size:11px;font-weight:600;white-space:nowrap;margin:0;text-transform:none;letter-spacing:0}
+.scale-inp{width:72px;background:var(--bg3);border-color:var(--narragansett);color:var(--raindance);font-weight:700;text-align:center;padding:6px 8px}
 .qty-orig{color:var(--text2);font-size:12px}
 .qty-arrow{color:var(--text3);margin:0 5px;font-size:11px}
 .qty-new{color:var(--blue);font-weight:700}
@@ -125,41 +152,136 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 .pc-price-inp{width:90px;padding:5px 8px;font-size:13px;text-align:right;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text)}
 .pc-price-inp:focus{border-color:var(--blue);outline:none}
 .pc-total-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--bg3);border-top:1px solid var(--border);flex-wrap:wrap;gap:8px}
-.pc-portions-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--blue-bg);border-top:1px solid var(--blue-border);flex-wrap:wrap}
-.pc-portions-bar label{color:var(--blue);font-size:11px;font-weight:600;margin:0;text-transform:none;letter-spacing:0}
-.pc-scale-inp{width:72px;padding:6px 8px;font-size:13px;text-align:center;background:var(--bg3);border:1px solid var(--blue-border);border-radius:6px;color:var(--blue);font-weight:700}
+.pc-portions-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:rgba(63,79,83,0.25);border-top:1px solid var(--narragansett);flex-wrap:wrap}
+.pc-portions-bar label{color:var(--raindance);font-size:11px;font-weight:600;margin:0;text-transform:none;letter-spacing:0}
+.pc-scale-inp{width:72px;padding:6px 8px;font-size:13px;text-align:center;background:var(--bg3);border:1px solid var(--narragansett);border-radius:6px;color:var(--raindance);font-weight:700}
 
 /* expiration */
 .exp-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:.875rem;overflow:hidden;border-left:4px solid var(--border)}
-.exp-card.exp-good{border-left-color:var(--green)}
-.exp-card.exp-soon{border-left-color:var(--amber)}
-.exp-card.exp-expired{border-left-color:var(--red)}
+.exp-card.exp-good{border-left-color:var(--raindance)}
+.exp-card.exp-soon{border-left-color:var(--sherwoodtan)}
+.exp-card.exp-expired{border-left-color:var(--southwestpottery)}
 .exp-row{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .exp-name{font-weight:700;font-size:15px}
 .exp-meta{font-size:12px;color:var(--text2);margin-top:3px}
 .exp-status{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
-.exp-status.exp-good{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
-.exp-status.exp-soon{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
-.exp-status.exp-expired{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.exp-status.exp-good{background:rgba(163,179,168,0.18);color:var(--raindance);border:1px solid var(--raindance)}
+.exp-status.exp-soon{background:rgba(184,154,118,0.2);color:var(--sherwoodtan);border:1px solid var(--sherwoodtan)}
+.exp-status.exp-expired{background:rgba(156,91,84,0.2);color:var(--southwestpottery);border:1px solid var(--southwestpottery)}
 .exp-dates{display:flex;gap:16px;font-size:12px;color:var(--text2)}
 .exp-dates strong{color:var(--text)}
+
+
+/* ════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 720px) {
+  body{padding:.6rem .6rem 2.5rem;font-size:13px}
+  h1{font-size:16px}
+  .card{padding:.8rem .85rem;border-radius:12px}
+  .card-title{font-size:10px}
+
+  /* bigger inputs to avoid iOS auto-zoom + easier tapping */
+  input,select{font-size:16px;padding:9px 10px}
+  .btn{padding:9px 13px;font-size:13px}
+  label{font-size:10px}
+
+  /* tabs: horizontal scroll instead of wrapping */
+  .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;gap:2px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:9px 12px;font-size:12px;flex-shrink:0}
+
+  /* generic grids -> single column */
+  .g2,.g3,.g4{grid-template-columns:1fr;gap:10px}
+  .g2 [style*="grid-column"],.g3 [style*="grid-column"],.g4 [style*="grid-column"]{grid-column:1}
+
+  /* ── delivery product rows ── */
+  .del-header-row{display:none}
+  .del-prod-row{grid-template-columns:1fr 1fr;gap:8px 10px;padding:12px}
+  .del-prod-row > div:nth-child(1){grid-column:1/3}  /* product */
+  .del-prod-row > div:nth-child(6){grid-column:1/3}  /* price after tax */
+  .del-prod-row > button{grid-column:1/3;justify-self:end;width:auto}
+  .m-lbl{display:block;font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+
+  /* ── recipe ingredient rows ── */
+  .ing-row{grid-template-columns:1fr 1fr;gap:8px 10px;padding:12px}
+  .ing-row > div:nth-child(1){grid-column:1/3}  /* supplier */
+  .ing-row > div:nth-child(2){grid-column:1/3}  /* product */
+  .ing-row > button{grid-column:1/3;justify-self:end;width:auto}
+
+  /* ── storage rows ── */
+  .storage-header-row{display:none}
+  .storage-row{grid-template-columns:auto 1fr;gap:6px 10px;padding:10px 8px}
+  .sr-cell{padding:4px 0}
+  .sr-cell-move{grid-column:1;grid-row:1}
+  .sr-cell-name{grid-column:2;grid-row:1}
+  .sr-cell-avail,.sr-cell-min,.sr-cell-status,.sr-cell-supplier{
+    grid-column:1/3;display:flex;align-items:center;justify-content:space-between;
+    padding:6px 0;border-top:1px solid var(--border)
+  }
+  .qty-inp-storage,.min-inp{width:90px}
+
+  /* ── recipe / price calc card headers ── */
+  .recipe-head,.pc-head,.del-log-head{flex-wrap:wrap;row-gap:8px}
+  .recipe-title,.pc-title{font-size:14px}
+
+  /* ── scale bar (recipes: portions + made/expires + buttons) ── */
+  .scale-bar{flex-direction:column;align-items:stretch;gap:10px;padding:12px}
+  .scale-bar .scale-inp{width:100%}
+  .scale-bar > div[style*="margin-left:12px"]{margin-left:0!important;width:100%;flex-wrap:wrap;gap:8px 12px}
+  .scale-bar > div[style*="margin-left:12px"] input[type=date]{flex:1;width:auto;min-width:130px}
+  .scale-bar > div[style*="margin-left:auto"]{margin-left:0!important;width:100%;flex-wrap:wrap}
+  .scale-bar > div[style*="margin-left:auto"] .btn{flex:1;min-width:110px}
+
+  /* ── price calculator ── */
+  .pc-col-header{display:none}
+  .pc-ing-row{flex-direction:column;align-items:stretch;gap:8px;padding:10px 0}
+  .pc-ing-left{flex-wrap:wrap;gap:6px;width:100%}
+  .pc-ing-row > div[style*="flex-shrink:0"]{width:100%;justify-content:space-between}
+  .pc-ing-row > div[style*="flex-shrink:0"] > div[style*="align-items:flex-end"]{align-items:flex-start}
+  .pc-price-inp{width:120px}
+  .pc-total-bar{flex-wrap:wrap;gap:12px}
+  .pc-portions-bar{flex-wrap:wrap}
+
+  /* ── delivery totals + log footer ── */
+  #del-totals{padding:12px}
+  .del-totals-footer{flex-wrap:wrap;gap:10px!important;justify-content:space-between!important}
+
+  /* ── expiration ── */
+  .exp-row{flex-wrap:wrap;gap:10px}
+  .exp-dates{flex-wrap:wrap;gap:8px 14px}
+  .exp-name{font-size:14px}
+
+  /* ── metrics / misc grids ── */
+  .del-prod-row .price-incl-display{padding:9px 10px;background:var(--bg4);border-radius:7px;text-align:center}
+}
+
+
+/* ── geometric icon shapes (replacing emoji) ── */
+.ic{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.ic svg{display:block}
+.ic-square{width:14px;height:14px;border:2px solid currentColor;border-radius:3px}
+.ic-circle{width:14px;height:14px;border:2px solid currentColor;border-radius:50%}
+.ic-triangle{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid currentColor}
+.ic-diamond{width:11px;height:11px;border:2px solid currentColor;transform:rotate(45deg)}
+.ic-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
 </style>
 </head>
 <body>
 
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem">
-  <span style="font-size:22px">🧮</span>
-  <h1 style="font-size:18px;font-weight:700">Kitchen Manager</h1>
+  <span style="font-size:22px"><span class="ic"><svg width="22" height="22" viewBox="0 0 22 22"><rect x="2" y="2" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" rx="3"/><line x1="2" y1="8" x2="20" y2="8" stroke="currentColor" stroke-width="2"/><line x1="8" y1="8" x2="8" y2="20" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="14" r="1.6" fill="currentColor"/><circle cx="14" cy="17" r="1.6" fill="currentColor"/></svg></span></span>
+  <h1 style="font-size:18px;font-weight:700;letter-spacing:.01em;color:var(--swisscoffee)">Kitchen Manager</h1>
 </div>
 
 <div class="tabs">
-  <button class="tab active" onclick="go('suppliers',this)">🏪 Suppliers</button>
-  <button class="tab" onclick="go('delivery',this)">🚚 Delivery</button>
-  <button class="tab" onclick="go('storage',this)">📦 Storage</button>
-  <button class="tab" onclick="go('recipes',this)">📋 Recipes</button>
-  <button class="tab" onclick="go('today',this)">📅 Today Used</button>
-  <button class="tab" onclick="go('price',this)">💰 Price Calculator</button>
-  <button class="tab" onclick="go('expiration',this)">⏰ Expiration</button>
+  <button class="tab active" onclick="go('suppliers',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" rx="2"/><line x1="1" y1="5" x2="13" y2="5" stroke="currentColor" stroke-width="1.6"/></svg></span> Suppliers</button>
+  <button class="tab" onclick="go('delivery',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="3" width="8" height="7" fill="none" stroke="currentColor" stroke-width="1.6" rx="1"/><polygon points="9,5 13,5 13,8 9,8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="4" cy="11.5" r="1.3" fill="currentColor"/><circle cx="10.5" cy="11.5" r="1.3" fill="currentColor"/></svg></span> Delivery</button>
+  <button class="tab" onclick="go('storage',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,4.5 13,9.5 7,13 1,9.5 1,4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="1" y1="4.5" x2="7" y2="8" stroke="currentColor" stroke-width="1.6"/><line x1="13" y1="4.5" x2="7" y2="8" stroke="currentColor" stroke-width="1.6"/><line x1="7" y1="8" x2="7" y2="13" stroke="currentColor" stroke-width="1.6"/></svg></span> Storage</button>
+  <button class="tab" onclick="go('recipes',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="1" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.6" rx="1"/><line x1="4.5" y1="4.5" x2="9.5" y2="4.5" stroke="currentColor" stroke-width="1.4"/><line x1="4.5" y1="7" x2="9.5" y2="7" stroke="currentColor" stroke-width="1.4"/><line x1="4.5" y1="9.5" x2="8" y2="9.5" stroke="currentColor" stroke-width="1.4"/></svg></span> Recipes</button>
+  <button class="tab" onclick="go('today',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="2" width="12" height="11" fill="none" stroke="currentColor" stroke-width="1.6" rx="1.5"/><line x1="1" y1="5.5" x2="13" y2="5.5" stroke="currentColor" stroke-width="1.6"/><line x1="4" y1="1" x2="4" y2="3" stroke="currentColor" stroke-width="1.6"/><line x1="10" y1="1" x2="10" y2="3" stroke="currentColor" stroke-width="1.6"/></svg></span> Today Used</button>
+  <button class="tab" onclick="go('price',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" rx="2"/><line x1="4" y1="4.5" x2="10" y2="4.5" stroke="currentColor" stroke-width="1.4"/><line x1="4" y1="7" x2="10" y2="7" stroke="currentColor" stroke-width="1.4"/><line x1="4" y1="9.5" x2="7" y2="9.5" stroke="currentColor" stroke-width="1.4"/></svg></span> Price Calculator</button>
+  <button class="tab" onclick="go('expiration',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="7" y1="4.5" x2="7" y2="7.5" stroke="currentColor" stroke-width="1.6"/><line x1="7" y1="7.5" x2="9" y2="8.5" stroke="currentColor" stroke-width="1.6"/><line x1="5" y1="1" x2="9" y2="1" stroke="currentColor" stroke-width="1.6"/></svg></span> Expiration</button>
 </div>
 
 <!-- SUPPLIERS -->
@@ -168,7 +290,7 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
     <div class="card-title">Add supplier</div>
     <div class="g3">
       <div style="grid-column:1/3"><label>Company name</label><input id="s-name" placeholder="e.g. Metro Cash & Carry"></div>
-      <div style="padding-bottom:1px"><button class="btn btn-blue" onclick="addSupplier()" style="width:100%">＋ Add supplier</button></div>
+      <div style="padding-bottom:1px"><button class="btn btn-blue" onclick="addSupplier()" style="width:100%"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="2"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="2"/></svg></span> Add supplier</button></div>
     </div>
   </div>
   <div id="suppliers-list"></div>
@@ -197,7 +319,7 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
     </div>
     <div class="card-title" style="margin-bottom:6px">Products in this delivery</div>
     <!-- column headers -->
-    <div style="display:grid;grid-template-columns:1fr 90px 80px 130px 90px 130px auto;gap:8px;padding:0 14px;margin-bottom:4px">
+    <div class="del-header-row" style="display:grid;grid-template-columns:1fr 90px 80px 130px 90px 130px auto;gap:8px;padding:0 14px;margin-bottom:4px">
       <span style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Product</span>
       <span style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Qty</span>
       <span style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Unit</span>
@@ -207,25 +329,25 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
       <span></span>
     </div>
     <div id="del-prod-rows"></div>
-    <button class="btn btn-sm" id="del-add-prod-btn" onclick="addDelProdRow()" style="margin-bottom:14px;display:none">＋ Add product</button>
-    <div id="del-no-supplier" style="font-size:13px;color:var(--text3);margin-bottom:14px">← Select a supplier first.</div>
+    <button class="btn btn-sm" id="del-add-prod-btn" onclick="addDelProdRow()" style="margin-bottom:14px;display:none"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="2"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="2"/></svg></span> Add product</button>
+    <div id="del-no-supplier" style="font-size:13px;color:var(--text3);margin-bottom:14px"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="10" y1="6" x2="2" y2="6" stroke="currentColor" stroke-width="1.8"/><path d="M5 2L2 6l3 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Select a supplier first.</div>
     <!-- totals -->
     <div id="del-totals" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:14px">
       <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
         <span style="color:var(--text2)">Total before tax</span><span id="tot-excl" style="font-weight:600">€0.00</span>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
-        <span style="color:var(--text2)">Tax amount</span><span id="tot-tax" style="font-weight:600;color:var(--amber)">€0.00</span>
+        <span style="color:var(--text2)">Tax amount</span><span id="tot-tax" style="font-weight:600;color:var(--sherwoodtan)">€0.00</span>
       </div>
       <hr style="margin:8px 0">
       <div style="display:flex;justify-content:space-between;font-size:15px">
-        <span style="font-weight:600">Total after tax</span><span id="tot-incl" style="font-weight:700;color:var(--green)">€0.00</span>
+        <span style="font-weight:600">Total after tax</span><span id="tot-incl" style="font-weight:700;color:var(--raindance)">€0.00</span>
       </div>
     </div>
     <hr>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button class="btn btn-sm" onclick="clearDeliveryForm()">Clear</button>
-      <button class="btn btn-green btn-sm" id="save-del-btn" onclick="saveDelivery()">✓ Save delivery & update storage</button>
+      <button class="btn btn-green btn-sm" id="save-del-btn" onclick="saveDelivery()"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save delivery & update storage</button>
     </div>
   </div>
   <div class="card-title" style="margin-top:.25rem">Delivery history</div>
@@ -235,7 +357,7 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 <!-- STORAGE -->
 <div class="pane" id="pane-storage">
   <div class="card" style="padding:0;overflow:hidden">
-    <div style="display:grid;grid-template-columns:56px 1fr 100px 90px 90px 150px;gap:0;border-bottom:1px solid var(--border);padding:8px 10px;background:var(--bg3)">
+    <div class="storage-header-row" style="display:grid;grid-template-columns:56px 1fr 100px 90px 90px 150px;gap:0;border-bottom:1px solid var(--border);padding:8px 10px;background:var(--bg3)">
       <div class="card-title" style="margin:0;font-size:10px">Priority</div>
       <div class="card-title" style="margin:0;font-size:10px">Product</div>
       <div class="card-title" style="margin:0;font-size:10px;text-align:center">Available</div>
@@ -245,7 +367,7 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
     </div>
     <div id="storage-list"></div>
   </div>
-  <div style="font-size:12px;color:var(--text3);margin-top:4px">💡 Set Min qty thresholds. Deliveries update Available automatically. Use ▲▼ to reorder.</div>
+  <div style="font-size:12px;color:var(--text3);margin-top:4px"><span class="ic"><svg width="13" height="13" viewBox="0 0 14 14"><circle cx="7" cy="6" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/><line x1="5.5" y1="11" x2="8.5" y2="11" stroke="currentColor" stroke-width="1.4"/><line x1="6" y1="12.5" x2="8" y2="12.5" stroke="currentColor" stroke-width="1.4"/></svg></span> Set Min qty thresholds. Deliveries update Available automatically. Use the arrows to reorder.</div>
 </div>
 
 <!-- RECIPES -->
@@ -258,11 +380,11 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
     </div>
     <div class="card-title" style="margin-bottom:8px">Ingredients</div>
     <div id="ing-rows"></div>
-    <button class="btn btn-sm" onclick="addIngRow(null)" style="margin-bottom:14px">＋ Add ingredient</button>
+    <button class="btn btn-sm" onclick="addIngRow(null)" style="margin-bottom:14px"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="2"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="2"/></svg></span> Add ingredient</button>
     <hr>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button class="btn btn-sm" id="recipe-cancel" style="display:none" onclick="cancelRecipe()">Cancel</button>
-      <button class="btn btn-blue btn-sm" onclick="saveRecipe()">💾 Save recipe</button>
+      <button class="btn btn-blue btn-sm" onclick="saveRecipe()"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.4" rx="1"/><rect x="3" y="1" width="4" height="3" fill="currentColor"/><rect x="3" y="7" width="6" height="3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span> Save recipe</button>
     </div>
   </div>
   <div id="recipes-list"></div>
@@ -351,18 +473,22 @@ function getStatus(item) {
   return 'green';
 }
 function statusBadge(item) {
-  const map = {green:['b-green','✓ Good'],amber:['b-amber','⚠ Medium'],red:['b-red','✕ Low'],grey:['b-grey','— No min']};
+  const map = {green:['b-green','<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Good'],amber:['b-amber','<span class="ic"><svg width="11" height="11" viewBox="0 0 14 14"><path d="M7 1.5l6 10.5H1z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><line x1="7" y1="5.5" x2="7" y2="8.5" stroke="currentColor" stroke-width="1.4"/><circle cx="7" cy="10.5" r="0.6" fill="currentColor"/></svg></span> Medium'],red:['b-red','<span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span> Low'],grey:['b-grey','— No min']};
   const [cls,lbl] = map[getStatus(item)];
   return `<span class="badge ${cls}">${lbl}</span>`;
 }
 function getStorageItem(supName,prodName) { return storage.find(x=>x.supName===supName&&x.prodName===prodName)||null; }
-function availBadge(supName,prodName,needed) {
+function availBadge(supName,prodName,needed,recipeUnit) {
   const item = getStorageItem(supName,prodName);
   if (!item) return '<span class="badge b-grey">—</span>';
   if (needed!==undefined) {
-    if (item.qty<=0||item.qty<needed) return `<span class="badge b-red">✕ Low (${item.qty} ${item.unit})</span>`;
-    if (item.qty<needed*1.5)          return `<span class="badge b-amber">⚠ Medium (${item.qty} ${item.unit})</span>`;
-    return `<span class="badge b-green">✓ Good (${item.qty} ${item.unit})</span>`;
+    // convert the needed qty from recipe unit to storage unit for comparison
+    const neededInStorageUnit = recipeUnit ? convertUnits(needed, recipeUnit, item.unit) : needed;
+    const avail = item.qty;
+    const availDisplay = avail.toFixed(2) + ' ' + item.unit;
+    if (avail<=0||avail<neededInStorageUnit) return `<span class="badge b-red"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span> Low (${availDisplay})</span>`;
+    if (avail<neededInStorageUnit*1.5) return `<span class="badge b-amber"><span class="ic"><svg width="11" height="11" viewBox="0 0 14 14"><path d="M7 1.5l6 10.5H1z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><line x1="7" y1="5.5" x2="7" y2="8.5" stroke="currentColor" stroke-width="1.4"/><circle cx="7" cy="10.5" r="0.6" fill="currentColor"/></svg></span> Medium (${availDisplay})</span>`;
+    return `<span class="badge b-green"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Good (${availDisplay})</span>`;
   }
   return statusBadge(item);
 }
@@ -424,8 +550,8 @@ function startEditProduct(si,pi) {
           <option value="box"${p.unit==='box'?' selected':''}>box</option>
           <option value="bag"${p.unit==='bag'?' selected':''}>bag</option>
         </select>
-        <button class="btn btn-blue btn-sm" onclick="saveEditProduct(${si},${pi})">✓ Save</button>
-        <button class="btn btn-sm" onclick="cancelEditProduct(${si},${pi})">✕</button>
+        <button class="btn btn-blue btn-sm" onclick="saveEditProduct(${si},${pi})"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save</button>
+        <button class="btn btn-sm" onclick="cancelEditProduct(${si},${pi})"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span></button>
       </div>
     </td>`;
   tr.replaceWith(editDiv);
@@ -470,13 +596,13 @@ function renderSuppliers() {
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div style="font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px">
-          🏪 ${s.name}
+          <span class="ic"><svg width="11" height="11" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" rx="2"/><line x1="1" y1="5" x2="13" y2="5" stroke="currentColor" stroke-width="1.6"/></svg></span> ${s.name}
           <span class="badge b-blue">${s.products.length} product${s.products.length!==1?'s':''}</span>
         </div>
-        <button class="icon-btn del" onclick="deleteSupplier(${si})">🗑</button>
+        <button class="icon-btn del" onclick="deleteSupplier(${si})"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 3h8M4.5 3V2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M3 3l.5 8a1 1 0 0 0 1 .9h3a1 1 0 0 0 1-.9L9 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
       </div>
       ${s.products.length?`
-        <table style="margin-bottom:12px">
+        <div class="table-scroll"><table style="margin-bottom:12px">
           <thead><tr><th>Product</th><th>Unit</th><th style="text-align:right">Actions</th></tr></thead>
           <tbody>
             ${s.products.map((p,pi)=>`
@@ -484,12 +610,12 @@ function renderSuppliers() {
                 <td style="font-weight:600">${p.name}</td>
                 <td><span class="badge b-amber">${p.unit}</span></td>
                 <td style="text-align:right;display:flex;gap:4px;justify-content:flex-end">
-                  <button class="icon-btn edit" onclick="startEditProduct(${si},${pi})" title="Edit">✏️</button>
-                  <button class="icon-btn del"  onclick="deleteProduct(${si},${pi})"    title="Delete">✕</button>
+                  <button class="icon-btn edit" onclick="startEditProduct(${si},${pi})" title="Edit"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span></button>
+                  <button class="icon-btn del"  onclick="deleteProduct(${si},${pi})"    title="Delete"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span></button>
                 </td>
               </tr>`).join('')}
           </tbody>
-        </table>`:
+        </table></div>`:
         '<div style="font-size:12px;color:var(--text3);margin-bottom:12px">No products yet.</div>'}
       <div class="g4">
         <div style="grid-column:1/3"><label>Product name</label><input id="pname-${si}" placeholder="e.g. Sugar"></div>
@@ -500,7 +626,7 @@ function renderSuppliers() {
             <option>pcs</option><option>box</option><option>bag</option>
           </select>
         </div>
-        <div style="padding-bottom:1px"><button class="btn btn-blue btn-sm" onclick="addProduct(${si})" style="width:100%">＋ Add</button></div>
+        <div style="padding-bottom:1px"><button class="btn btn-blue btn-sm" onclick="addProduct(${si})" style="width:100%"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="2"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="2"/></svg></span> Add</button></div>
       </div>
     </div>`).join('');
 }
@@ -551,11 +677,12 @@ function addDelProdRow(prefill) {
   const vat        = prefill ? prefill.vat : defaultVat;
   const priceAfter = (priceFixed!=='' && parseFloat(priceFixed)>0) ? '€'+(parseFloat(priceFixed)*(1+parseFloat(vat)/100)).toFixed(3) : '—';
   div.innerHTML=`
-    <div><select class="dpr-prod" onchange="onDelProdChange('${id}',this)">${prodOpts}</select></div>
-    <div><input type="number" class="dpr-qty" value="${qty}" placeholder="10" min="0.001" step="0.001" oninput="updateDeliveryTotals()"></div>
-    <div><input type="text" class="dpr-unit" value="${firstUnit}" style="text-align:center;background:var(--bg4);color:var(--text2)" readonly></div>
-    <div><input type="number" class="dpr-price-fixed" value="${priceFixed}" placeholder="0.000" min="0" step="0.001" oninput="calcDelRow(this)"></div>
+    <div><label class="m-lbl">Product</label><select class="dpr-prod" onchange="onDelProdChange('${id}',this)">${prodOpts}</select></div>
+    <div><label class="m-lbl">Quantity</label><input type="number" class="dpr-qty" value="${qty}" placeholder="10" min="0.001" step="0.001" oninput="updateDeliveryTotals()"></div>
+    <div><label class="m-lbl">Unit</label><input type="text" class="dpr-unit" value="${firstUnit}" style="text-align:center;background:var(--bg4);color:var(--text2)" readonly></div>
+    <div><label class="m-lbl">Price (€)</label><input type="number" class="dpr-price-fixed" value="${priceFixed}" placeholder="0.000" min="0" step="0.001" oninput="calcDelRow(this)"></div>
     <div>
+      <label class="m-lbl">VAT %</label>
       <select class="dpr-vat" onchange="calcDelRow(this)">
         <option value="0"${vat==='0'||vat===0?' selected':''}>0%</option>
         <option value="9"${vat==='9'||vat===9?' selected':''}>9%</option>
@@ -564,8 +691,8 @@ function addDelProdRow(prefill) {
         <option value="25"${vat==='25'||vat===25?' selected':''}>25%</option>
       </select>
     </div>
-    <div><div class="price-incl-display dpr-price-after">${priceAfter}</div></div>
-    <button class="icon-btn del" onclick="removeDelRow('${id}')" style="margin-bottom:1px">✕</button>`;
+    <div><label class="m-lbl">Price after tax</label><div class="price-incl-display dpr-price-after">${priceAfter}</div></div>
+    <button class="icon-btn del" onclick="removeDelRow('${id}')" style="margin-bottom:1px"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span> Remove</button>`;
   document.getElementById('del-prod-rows').appendChild(div);
   updateDeliveryTotals();
 }
@@ -643,7 +770,7 @@ function saveDelivery() {
     });
     deliveries[editingDelivery]={id:old.id,supName,date,docNo,items,totalExcl,totalIncl};
     editingDelivery=-1;
-    document.getElementById('save-del-btn').textContent='✓ Save delivery & update storage';
+    document.getElementById('save-del-btn').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save delivery & update storage';
   } else {
     deliveries.unshift({id:Date.now(),supName,date,docNo,items,totalExcl,totalIncl});
   }
@@ -656,9 +783,9 @@ function saveDelivery() {
   });
   persist(); clearDeliveryForm(); renderDeliveryLog();
   const btn=document.getElementById('save-del-btn');
-  const orig=btn.textContent;
-  btn.textContent='✓ Saved!'; btn.disabled=true;
-  setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},2000);
+  const orig=btn.innerHTML;
+  btn.innerHTML='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Saved!'; btn.disabled=true;
+  setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;},2000);
 }
 
 function editDelivery(i) {
@@ -677,7 +804,7 @@ function editDelivery(i) {
   document.getElementById('del-no-supplier').style.display='none';
   d.items.forEach(it=>addDelProdRow(it));
   updateDeliveryTotals();
-  document.getElementById('save-del-btn').textContent='✓ Update delivery';
+  document.getElementById('save-del-btn').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Update delivery';
   // scroll to form
   document.querySelector('#pane-delivery .card').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -697,7 +824,7 @@ function clearDeliveryForm() {
   document.getElementById('del-totals').style.display='none';
   document.getElementById('del-add-prod-btn').style.display='none';
   document.getElementById('del-no-supplier').style.display='';
-  document.getElementById('save-del-btn').textContent='✓ Save delivery & update storage';
+  document.getElementById('save-del-btn').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save delivery & update storage';
 }
 
 function toggleDelLog(id) {
@@ -714,20 +841,20 @@ function renderDeliveryLog() {
     <div class="del-log-card">
       <div class="del-log-head" onclick="toggleDelLog(${d.id})">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span style="font-weight:700;font-size:14px">🏪 ${d.supName}</span>
+          <span style="font-weight:700;font-size:14px"><span class="ic"><svg width="11" height="11" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" rx="2"/><line x1="1" y1="5" x2="13" y2="5" stroke="currentColor" stroke-width="1.6"/></svg></span> ${d.supName}</span>
           <span class="badge b-blue">${fmtDate(d.date)}</span>
-          ${d.docNo?`<span class="badge b-grey">📄 ${d.docNo}</span>`:''}
-          <span class="badge b-green">Total: ${fmtMoney(d.totalIncl)}</span>
+          ${d.docNo?`<span class="badge b-grey"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2 1h5l3 3v7H2z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7 1v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span> ${d.docNo}</span>`:''}
+          <span class="badge b-green" style="color:var(--raindance)">Total: ${fmtMoney(d.totalIncl)}</span>
           <span style="font-size:12px;color:var(--text3)">${d.items.length} product${d.items.length!==1?'s':''}</span>
         </div>
         <div style="display:flex;align-items:center;gap:6px">
-          <button class="icon-btn edit" onclick="event.stopPropagation();editDelivery(${i})" title="Edit">✏️</button>
-          <button class="icon-btn del"  onclick="event.stopPropagation();deleteDelivery(${i})" title="Delete">🗑</button>
-          <span style="color:var(--text3);font-size:20px;transition:transform .2s" id="dlc-${d.id}">›</span>
+          <button class="icon-btn edit" onclick="event.stopPropagation();editDelivery(${i})" title="Edit"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span></button>
+          <button class="icon-btn del"  onclick="event.stopPropagation();deleteDelivery(${i})" title="Delete"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 3h8M4.5 3V2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M3 3l.5 8a1 1 0 0 0 1 .9h3a1 1 0 0 0 1-.9L9 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <span style="color:var(--text3);transition:transform .2s;display:inline-flex" id="dlc-${d.id}"><span class="ic"><svg width="10" height="10" viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9" fill="currentColor"/></svg></span></span>
         </div>
       </div>
       <div class="del-log-body" id="dlb-${d.id}">
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Product</th><th>Qty</th><th>Unit</th><th>Price/unit</th><th>VAT</th><th>Price/unit after tax</th><th>Price after tax</th></tr></thead>
           <tbody>
             ${d.items.map(it=>`
@@ -741,8 +868,8 @@ function renderDeliveryLog() {
                 <td style="font-weight:600">${(it.priceAfter??it.priceIncl)!=null?fmtMoney(it.priceAfter??it.priceIncl):'—'}</td>
               </tr>`).join('')}
           </tbody>
-        </table>
-        <div style="display:flex;justify-content:flex-end;gap:24px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px">
+        </table></div>
+        <div class="del-totals-footer" style="display:flex;justify-content:flex-end;gap:24px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px">
           <span style="color:var(--text2)">Before tax: <strong>${fmtMoney(d.totalExcl)}</strong></span>
           <span style="color:var(--text2)">Tax: <strong style="color:var(--amber)">${fmtMoney(d.totalIncl-d.totalExcl)}</strong></span>
           <span style="color:var(--text2)">After tax: <strong style="color:var(--green);font-size:15px">${fmtMoney(d.totalIncl)}</strong></span>
@@ -764,35 +891,44 @@ function renderStorage(){
   if(!storage.length){list.innerHTML='<div class="empty">No products yet — add them in Suppliers.</div>';return;}
   list.innerHTML=storage.map((item,i)=>`
     <div class="${item.priority?'storage-row priority':'storage-row'}">
-      <div class="sr-cell" style="width:56px">
+      <div class="sr-cell sr-cell-move">
         <div class="sr-move">
-          <button class="icon-btn move" onclick="moveStorageItem(${i},-1)" style="padding:1px 5px;font-size:11px">▲</button>
-          <button class="icon-btn move" onclick="moveStorageItem(${i},1)"  style="padding:1px 5px;font-size:11px">▼</button>
+          <button class="icon-btn move" onclick="moveStorageItem(${i},-1)" style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="5,1 9,8 1,8" fill="currentColor"/></svg></span></button>
+          <button class="icon-btn move" onclick="moveStorageItem(${i},1)"  style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="1,2 9,2 5,9" fill="currentColor"/></svg></span></button>
         </div>
       </div>
-      <div class="sr-cell" style="display:flex;align-items:center;gap:8px">
+      <div class="sr-cell sr-cell-name" style="display:flex;align-items:center;gap:8px">
         <button class="icon-btn" onclick="togglePriority(${i})" style="font-size:18px;padding:0 2px">
-          ${item.priority?'<span style="color:var(--amber)">★</span>':'<span style="color:var(--text3)">☆</span>'}
+          ${item.priority?'<span class="ic" style="color:var(--sherwoodtan)"><svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 13,7 7,13 1,7" fill="currentColor"/></svg></span>':'<span class="ic" style="color:var(--text3)"><svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 13,7 7,13 1,7" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>'}
         </button>
         <div>
           <div style="font-weight:600">${item.prodName}</div>
           <div style="font-size:11px;color:var(--text3)">${item.supName}</div>
         </div>
       </div>
-      <div class="sr-cell" style="text-align:center">
-        <input type="number" class="qty-inp-storage" value="${item.qty}" min="0" step="0.01"
-          oninput="updateStorageQty(${i},this.value)" onblur="renderStorage()" style="width:80px">
-        <div style="font-size:11px;color:var(--text3);margin-top:2px">${item.unit}</div>
+      <div class="sr-cell sr-cell-avail">
+        <span class="m-lbl">Available</span>
+        <span class="sr-control">
+          <input type="number" class="qty-inp-storage" value="${item.qty}" min="0" step="0.01"
+            oninput="updateStorageQty(${i},this.value)" onblur="renderStorage()">
+          <span class="sr-unit">${item.unit}</span>
+        </span>
       </div>
-      <div class="sr-cell" style="text-align:center">
-        <input type="number" class="min-inp" value="${item.minQty}" min="0" step="0.01"
-          oninput="updateStorageMin(${i},this.value)" onblur="renderStorage()" style="width:72px">
-        <div style="font-size:11px;color:var(--text3);margin-top:2px">${item.unit}</div>
+      <div class="sr-cell sr-cell-min">
+        <span class="m-lbl">Min qty</span>
+        <span class="sr-control">
+          <input type="number" class="min-inp" value="${item.minQty}" min="0" step="0.01"
+            oninput="updateStorageMin(${i},this.value)" onblur="renderStorage()">
+          <span class="sr-unit">${item.unit}</span>
+        </span>
       </div>
-      <div class="sr-cell">${statusBadge(item)}</div>
-      <div class="sr-cell">
+      <div class="sr-cell sr-cell-status">
+        <span class="m-lbl">Status</span>
+        ${statusBadge(item)}
+      </div>
+      <div class="sr-cell sr-cell-supplier">
+        <span class="m-lbl">Supplier</span>
         <span class="badge b-blue" style="font-size:11px">${item.supName}</span>
-
       </div>
     </div>`).join('');
 }
@@ -825,7 +961,7 @@ function addIngRow(ing){
       <option value="box"${unit==='box'?' selected':''}>box</option>
       <option value="bag"${unit==='bag'?' selected':''}>bag</option>
     </select></div>
-    <button class="icon-btn del" style="margin-bottom:1px" onclick="document.getElementById('${id}').remove()">✕</button>`;
+    <button class="icon-btn del" style="margin-bottom:1px" onclick="document.getElementById('${id}').remove()"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span></button>`;
   document.getElementById('ing-rows').appendChild(div);
 }
 function onSupChange(id,sel){
@@ -867,7 +1003,7 @@ function editRecipe(i){
   const r=recipes[i];editingRecipe=i;
   document.getElementById('r-name').value=r.name;document.getElementById('r-portions').value=r.portions;
   document.getElementById('ing-rows').innerHTML='';r.ingredients.forEach(ing=>addIngRow(ing));
-  document.getElementById('recipe-form-label').textContent='✏️ Editing: '+r.name;
+  document.getElementById('recipe-form-label').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span> Editing: '+r.name;
   document.getElementById('recipe-cancel').style.display='';
   document.getElementById('recipe-form-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -888,23 +1024,31 @@ function updateScale(i){
     const same=scaled===ing.qty;
     tr.querySelector('.qty-cell').innerHTML=same
       ?`<span class="qty-orig">${ing.qty} ${ing.unit}</span>`
-      :`<span class="qty-orig">${ing.qty} ${ing.unit}</span><span class="qty-arrow">→</span><span class="qty-new">${scaled} ${ing.unit}</span>`;
-    const ac=tr.querySelector('.avail-cell');if(ac)ac.innerHTML=availBadge(ing.supplier,ing.product,scaled);
+      :`<span class="qty-orig">${ing.qty} ${ing.unit}</span><span class="qty-arrow">&rarr;</span><span class="qty-new">${scaled} ${ing.unit}</span>`;
+    const ac=tr.querySelector('.avail-cell');if(ac)ac.innerHTML=availBadge(ing.supplier,ing.product,scaled,ing.unit);
   });
   const lbl=document.getElementById('plabel-'+i);
-  if(lbl)lbl.textContent=target===r.portions?`${r.portions} portion${r.portions!==1?'s':''} (base)`:`Scaled: ${r.portions} → ${target} portions`;
+  if(lbl)lbl.innerHTML=target===r.portions?`${r.portions} portion${r.portions!==1?'s':''} (base)`:`Scaled: ${r.portions} &rarr; ${target} portions`;
 }
 function resetScale(i){document.getElementById('scale-'+i).value=recipes[i].portions;updateScale(i);}
+// Convert a quantity from recipeUnit to storageUnit for stock calculations
+function convertUnits(qty, fromUnit, toUnit) {
+  if (fromUnit === toUnit) return qty;
+  if (fromUnit === 'g'  && toUnit === 'kg')  return qty / 1000;
+  if (fromUnit === 'kg' && toUnit === 'g')   return qty * 1000;
+  if (fromUnit === 'ml' && toUnit === 'L')   return qty / 1000;
+  if (fromUnit === 'L'  && toUnit === 'ml')  return qty * 1000;
+  // same scale — pass through unchanged (pcs, box, bag)
+  return qty;
+}
+
 function sendToToday(i){
   const r=recipes[i],target=getTarget(i),date=todayStr();
   const scaled=scaledIngredients(r,target);
   scaled.forEach(ing=>{
     const item=getStorageItem(ing.supplier,ing.product);if(!item)return;
-    let deduct=ing.scaledQty;
-    if(ing.unit==='g'&&item.unit==='kg')deduct/=1000;
-    else if(ing.unit==='ml'&&item.unit==='L')deduct/=1000;
-    else if(ing.unit==='kg'&&item.unit==='g')deduct*=1000;
-    item.qty=Math.max(0,parseFloat((item.qty-deduct).toFixed(4)));
+    const deduct = convertUnits(ing.scaledQty, ing.unit, item.unit);
+    item.qty=Math.max(0,parseFloat((item.qty-deduct).toFixed(6)));
   });
   usedLog.push({id:Date.now(),date,recipeName:r.name,basePortions:r.portions,portions:target,ingredients:scaled});
 
@@ -923,7 +1067,7 @@ function sendToToday(i){
 
   persist();
   const btn=document.getElementById('send-btn-'+i);
-  if(btn){btn.textContent='✓ Sent!';btn.disabled=true;setTimeout(()=>{btn.textContent='📤 Send to Today Used';btn.disabled=false;updateScale(i);},1800);}
+  if(btn){btn.innerHTML='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Sent!';btn.disabled=true;setTimeout(()=>{btn.innerHTML='<span class="ic"><svg width="13" height="13" viewBox="0 0 14 14"><path d="M2 12l10-10M6 2h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Send to Today Used';btn.disabled=false;updateScale(i);},1800);}
   updateScale(i);
 }
 function moveRecipe(i, dir) {
@@ -951,15 +1095,15 @@ function renderRecipes(){
         <td style="font-weight:600">${ing.product}</td>
         <td><span class="badge b-blue" style="font-size:10px">${ing.supplier}</span></td>
         <td class="qty-cell"><span class="qty-orig">${ing.qty} ${ing.unit}</span></td>
-        <td class="avail-cell">${availBadge(ing.supplier,ing.product,ing.qty)}</td>
+        <td class="avail-cell">${availBadge(ing.supplier,ing.product,ing.qty,ing.unit)}</td>
       </tr>`).join('');
     return `
     <div class="recipe-card">
       <div class="recipe-head" style="cursor:pointer" onclick="toggleRecipeBody(${i})">
         <div style="display:flex;align-items:center;gap:8px">
           <div style="display:flex;flex-direction:column;gap:1px" onclick="event.stopPropagation()">
-            <button class="icon-btn move" onclick="moveRecipe(${i},-1)" style="padding:1px 5px;font-size:11px">▲</button>
-            <button class="icon-btn move" onclick="moveRecipe(${i},1)"  style="padding:1px 5px;font-size:11px">▼</button>
+            <button class="icon-btn move" onclick="moveRecipe(${i},-1)" style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="5,1 9,8 1,8" fill="currentColor"/></svg></span></button>
+            <button class="icon-btn move" onclick="moveRecipe(${i},1)"  style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="1,2 9,2 5,9" fill="currentColor"/></svg></span></button>
           </div>
           <div>
             <div class="recipe-title">${r.name}</div>
@@ -967,31 +1111,31 @@ function renderRecipes(){
           </div>
         </div>
         <div style="display:flex;gap:4px;align-items:center">
-          <button class="icon-btn edit" onclick="event.stopPropagation();editRecipe(${i})">✏️</button>
-          <button class="icon-btn del"  onclick="event.stopPropagation();deleteRecipe(${i})">🗑</button>
-          <span style="color:var(--text3);font-size:20px;transition:transform .2s;margin-left:4px" id="rchev-${i}" style="transform:rotate(90deg)">›</span>
+          <button class="icon-btn edit" onclick="event.stopPropagation();editRecipe(${i})"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span></button>
+          <button class="icon-btn del"  onclick="event.stopPropagation();deleteRecipe(${i})"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 3h8M4.5 3V2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M3 3l.5 8a1 1 0 0 0 1 .9h3a1 1 0 0 0 1-.9L9 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <span style="color:var(--text3);transition:transform .2s;margin-left:4px;display:inline-flex;transform:rotate(90deg)" id="rchev-${i}"><span class="ic"><svg width="10" height="10" viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9" fill="currentColor"/></svg></span></span>
         </div>
       </div>
       <div class="recipe-body collapsed" id="rbody-${i}">
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Ingredient</th><th>Supplier</th><th>Qty needed</th><th>Available</th></tr></thead>
           <tbody id="tbody-${i}">${rows}</tbody>
-        </table>
+        </table></div>
       </div>
       <div class="scale-bar collapsed" id="rscale-${i}">
         <label>Calculate for</label>
         <input type="number" id="scale-${i}" class="scale-inp" value="${r.portions}" min="0.5" step="0.5" oninput="updateScale(${i})">
         <span style="font-size:12px;color:var(--text2)">portions</span>
         <div style="display:flex;align-items:center;gap:8px;margin-left:12px">
-          <label style="margin:0;text-transform:none;letter-spacing:0;font-size:11px;color:var(--blue)">Made on</label>
-          <input type="date" id="made-${i}" value="${todayStr()}" style="width:130px;background:var(--bg3);border-color:var(--blue-border);color:var(--blue);font-weight:600;padding:6px 8px;font-size:12px">
-          <label style="margin:0;text-transform:none;letter-spacing:0;font-size:11px;color:var(--blue)">Expires on</label>
-          <input type="date" id="expires-${i}" style="width:130px;background:var(--bg3);border-color:var(--blue-border);color:var(--blue);font-weight:600;padding:6px 8px;font-size:12px">
+          <label style="margin:0;text-transform:none;letter-spacing:0;font-size:11px;color:var(--raindance)">Made on</label>
+          <input type="date" id="made-${i}" value="${todayStr()}" style="width:130px;background:var(--bg3);border-color:var(--narragansett);color:var(--raindance);font-weight:600;padding:6px 8px;font-size:12px">
+          <label style="margin:0;text-transform:none;letter-spacing:0;font-size:11px;color:var(--raindance)">Expires on</label>
+          <input type="date" id="expires-${i}" style="width:130px;background:var(--bg3);border-color:var(--narragansett);color:var(--raindance);font-weight:600;padding:6px 8px;font-size:12px">
         </div>
         <div style="display:flex;gap:6px;margin-left:auto;flex-wrap:wrap">
-          <button class="btn btn-sm" onclick="updateScale(${i})">⟳ Calculate</button>
+          <button class="btn btn-sm" onclick="updateScale(${i})"><span class="ic"><svg width="12" height="12" viewBox="0 0 14 14"><path d="M12 7A5 5 0 1 1 10.3 3.3M12 1v3h-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Calculate</button>
           <button class="btn btn-sm" onclick="resetScale(${i})">Reset</button>
-          <button class="btn btn-green btn-sm" id="send-btn-${i}" onclick="sendToToday(${i})">📤 Send to Today Used</button>
+          <button class="btn btn-green btn-sm" id="send-btn-${i}" onclick="sendToToday(${i})"><span class="ic"><svg width="13" height="13" viewBox="0 0 14 14"><path d="M2 12l10-10M6 2h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Send to Today Used</button>
         </div>
       </div>
     </div>`;
@@ -1011,7 +1155,7 @@ function renderTodayUsed(){
     ?`${fmtDate(date)} — ${entries.length} recipe${entries.length!==1?'s':''} made`
     :`${fmtDate(date)} — nothing logged`;
   const container=document.getElementById('today-entries');
-  if(!entries.length){container.innerHTML='<div class="empty">No entries for this day.<br>Go to Recipes, set portions and hit 📤 Send to Today Used.</div>';return;}
+  if(!entries.length){container.innerHTML='<div class="empty">No entries for this day.<br>Go to Recipes, set portions and hit <span class="ic"><svg width="13" height="13" viewBox="0 0 14 14"><path d="M2 12l10-10M6 2h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Send to Today Used.</div>';return;}
   container.innerHTML=`
     <div class="day-group">
       <div class="day-header">
@@ -1036,8 +1180,8 @@ function renderTodayUsed(){
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
                   <span class="badge b-green">${e.portions} portions</span>
-                  <button class="icon-btn del" onclick="event.stopPropagation();deleteUsed(${logIdx})" title="Delete">🗑</button>
-                  <span style="color:var(--text3);font-size:20px;transition:transform .2s" id="chev-${e.id}">›</span>
+                  <button class="icon-btn del" onclick="event.stopPropagation();deleteUsed(${logIdx})" title="Delete"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 3h8M4.5 3V2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M3 3l.5 8a1 1 0 0 0 1 .9h3a1 1 0 0 0 1-.9L9 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <span style="color:var(--text3);transition:transform .2s;display:inline-flex" id="chev-${e.id}"><span class="ic"><svg width="10" height="10" viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9" fill="currentColor"/></svg></span></span>
                 </div>
               </div>
               <div class="entry-detail" id="detail-${e.id}">
@@ -1054,8 +1198,27 @@ function toggleDetail(detailId,chevId){
   el.classList.toggle('open');if(ch)ch.style.transform=el.classList.contains('open')?'rotate(90deg)':'';
 }
 function deleteUsed(i){
-  if(!confirm('Remove this entry? This will NOT restore storage quantities.'))return;
-  usedLog.splice(i,1);persist();renderTodayUsed();
+  const entry = usedLog[i];
+  if (!entry) return;
+  const isToday = entry.date === todayStr();
+  const confirmMsg = isToday
+    ? 'Remove this entry? Storage quantities will be restored since it was logged today.'
+    : 'Remove this entry? Storage will NOT be changed (entry is from a previous day).';
+  if (!confirm(confirmMsg)) return;
+
+  // Only restore storage if the entry was logged today
+  if (isToday && entry.ingredients) {
+    entry.ingredients.forEach(ing => {
+      const item = getStorageItem(ing.supplier, ing.product);
+      if (!item) return;
+      const restore = convertUnits(ing.scaledQty, ing.unit, item.unit);
+      item.qty = parseFloat((item.qty + restore).toFixed(6));
+    });
+  }
+
+  usedLog.splice(i, 1);
+  persist();
+  renderTodayUsed();
 }
 
 
@@ -1098,7 +1261,7 @@ function getDeliveryPrice(supName, prodName) {
 }
 
 // Convert qty from recipeUnit to deliveryUnit so we can calculate cost correctly
-// e.g. recipe needs 50g, delivery unit is kg → convert 50g to 0.05kg
+// e.g. recipe needs 50g, delivery unit is kg <span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="6" x2="10" y2="6" stroke="currentColor" stroke-width="1.8"/><path d="M7 2l3 4-3 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> convert 50g to 0.05kg
 function convertToDeliveryUnit(qty, recipeUnit, deliveryUnit) {
   if (recipeUnit === deliveryUnit) return qty;
   // weight conversions
@@ -1129,7 +1292,7 @@ function renderPriceCalc() {
         pricePerRecipeUnit = delPrice.pricePerUnit * recipeQtyInDelUnit;
         const unitLabel = delPrice.unit;
         const ppu = (delPrice.priceFixed / delPrice.deliveredQty).toFixed(4);
-        deliveryNote = `<span style="font-size:10px;color:var(--green)">↓ €${delPrice.priceFixed} / ${delPrice.deliveredQty}${unitLabel} = €${ppu}/${unitLabel}</span>`;
+        deliveryNote = `<span style="font-size:10px;color:var(--green)"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="10" stroke="currentColor" stroke-width="1.8"/><path d="M3 7l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> €${delPrice.priceFixed} / ${delPrice.deliveredQty}${unitLabel} = €${ppu}/${unitLabel}</span>`;
       }
       const inputVal = pricePerRecipeUnit !== null ? pricePerRecipeUnit.toFixed(6) : '';
       return `
@@ -1159,8 +1322,8 @@ function renderPriceCalc() {
       <div class="pc-head" style="cursor:pointer" onclick="togglePcBody(${ri})">
         <div style="display:flex;align-items:center;gap:8px">
           <div style="display:flex;flex-direction:column;gap:1px" onclick="event.stopPropagation()">
-            <button class="icon-btn move" onclick="movePc(${ri},-1)" style="padding:1px 5px;font-size:11px">▲</button>
-            <button class="icon-btn move" onclick="movePc(${ri},1)"  style="padding:1px 5px;font-size:11px">▼</button>
+            <button class="icon-btn move" onclick="movePc(${ri},-1)" style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="5,1 9,8 1,8" fill="currentColor"/></svg></span></button>
+            <button class="icon-btn move" onclick="movePc(${ri},1)"  style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="1,2 9,2 5,9" fill="currentColor"/></svg></span></button>
           </div>
           <div>
             <div class="pc-title">${r.name}</div>
@@ -1168,13 +1331,13 @@ function renderPriceCalc() {
           </div>
         </div>
         <div style="display:flex;gap:6px;align-items:center" onclick="event.stopPropagation()">
-          <button class="btn btn-sm" onclick="importDeliveryPrices(${ri})" style="font-size:11px;color:var(--green);border-color:var(--green-border)">↓ Re-import prices</button>
-          <button class="btn btn-sm" onclick="resetPc(${ri})">↺ Clear</button>
-          <span style="color:var(--text3);font-size:20px;transition:transform .2s;margin-left:4px" id="pcchev-${ri}">›</span>
+          <button class="btn btn-sm" onclick="importDeliveryPrices(${ri})" style="font-size:11px;color:var(--green);border-color:var(--green-border)"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="10" stroke="currentColor" stroke-width="1.8"/><path d="M3 7l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Re-import prices</button>
+          <button class="btn btn-sm" onclick="resetPc(${ri})"><span class="ic"><svg width="12" height="12" viewBox="0 0 14 14"><path d="M2 7a5 5 0 1 0 1.7-3.7M2 1v3h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Clear</button>
+          <span style="color:var(--text3);transition:transform .2s;margin-left:4px;display:inline-flex" id="pcchev-${ri}"><span class="ic"><svg width="10" height="10" viewBox="0 0 10 10"><polygon points="2,1 8,5 2,9" fill="currentColor"/></svg></span></span>
         </div>
       </div>
       <div class="pc-body collapsed" id="pcbody-${ri}">
-        <div style="display:grid;grid-template-columns:1fr auto auto;font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:0 0 6px;border-bottom:1px solid var(--border);margin-bottom:2px">
+        <div class="pc-col-header" style="display:grid;grid-template-columns:1fr auto auto;font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:0 0 6px;border-bottom:1px solid var(--border);margin-bottom:2px">
           <span>Ingredient</span>
           <span style="text-align:right;padding-right:8px;min-width:140px">Price (€)</span>
           <span style="min-width:80px;text-align:right">Line cost</span>
@@ -1184,11 +1347,11 @@ function renderPriceCalc() {
       <div class="pc-total-bar collapsed" id="pctot-${ri}">
         <div>
           <div style="font-size:11px;color:var(--text2);margin-bottom:2px">Recipe cost</div>
-          <div style="font-size:20px;font-weight:700;color:var(--green)" id="pc-total-${ri}">—</div>
+          <div style="font-size:20px;font-weight:700;color:var(--raindance)" id="pc-total-${ri}">—</div>
         </div>
         <div style="text-align:right">
           <div style="font-size:11px;color:var(--text2);margin-bottom:2px">Cost per portion</div>
-          <div style="font-size:20px;font-weight:700;color:var(--amber)" id="pc-per-${ri}">—</div>
+          <div style="font-size:20px;font-weight:700;color:var(--sherwoodtan)" id="pc-per-${ri}">—</div>
         </div>
       </div>
       <div class="pc-portions-bar collapsed" id="pcport-${ri}">
@@ -1250,7 +1413,7 @@ function recalcPc(ri) {
   if (perEl)   perEl.textContent   = anyFilled && targetPortions > 0 ? '€' + (total / targetPortions).toFixed(3) : '—';
   if (subEl)   subEl.textContent   = targetPortions === r.portions
     ? `${r.portions} portion${r.portions!==1?'s':''} (base)`
-    : `Scaled: ${r.portions} → ${targetPortions} portions`;
+    : `Scaled: ${r.portions} <span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="6" x2="10" y2="6" stroke="currentColor" stroke-width="1.8"/><path d="M7 2l3 4-3 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> ${targetPortions} portions`;
 }
 
 function resetPc(ri) {
@@ -1316,7 +1479,7 @@ function saveExpirationDate(i) {
 function renderExpiration() {
   const list = document.getElementById('expiration-list');
   if (!expirationLog.length) {
-    list.innerHTML = '<div class="empty">No expiration entries yet.<br>In Recipes, set "Made on" / "Expires on" dates and hit 📤 Send to Today Used.</div>';
+    list.innerHTML = '<div class="empty">No expiration entries yet.<br>In Recipes, set "Made on" / "Expires on" dates and hit <span class="ic"><svg width="13" height="13" viewBox="0 0 14 14"><path d="M2 12l10-10M6 2h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Send to Today Used.</div>';
     return;
   }
   // compute status + sort: expired first, then soonest expiring, then good (soonest first too)
@@ -1332,7 +1495,7 @@ function renderExpiration() {
     return a._daysLeft - b._daysLeft; // soonest expiry first within same group
   });
 
-  const statusLabel = { 'exp-good': '✓ Good', 'exp-soon': '⚠ Close to date', 'exp-expired': '✕ Expired' };
+  const statusLabel = { 'exp-good': '<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Good', 'exp-soon': '<span class="ic"><svg width="11" height="11" viewBox="0 0 14 14"><path d="M7 1.5l6 10.5H1z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><line x1="7" y1="5.5" x2="7" y2="8.5" stroke="currentColor" stroke-width="1.4"/><circle cx="7" cy="10.5" r="0.6" fill="currentColor"/></svg></span> Close to date', 'exp-expired': '<span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span> Expired' };
 
   list.innerHTML = enriched.map(e => {
     const daysTxt = e._status === 'exp-expired'
@@ -1352,14 +1515,14 @@ function renderExpiration() {
           <div class="exp-dates" style="margin-top:6px;display:none;align-items:center;gap:10px" id="exp-edit-${e._idx}">
             <label style="margin:0;text-transform:none;letter-spacing:0;font-size:12px;color:var(--text2)">New expiry date:</label>
             <input type="date" id="exp-date-input-${e._idx}" value="${e.expiresDate}" style="width:150px;padding:5px 8px;font-size:12px">
-            <button class="btn btn-blue btn-sm" onclick="saveExpirationDate(${e._idx})">✓ Save</button>
+            <button class="btn btn-blue btn-sm" onclick="saveExpirationDate(${e._idx})"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save</button>
             <button class="btn btn-sm" onclick="cancelEditExpiration(${e._idx})">Cancel</button>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
           <span class="exp-status ${e._status}">${statusLabel[e._status]}</span>
-          <button class="icon-btn edit" onclick="startEditExpiration(${e._idx})" title="Extend / edit expiry date">✏️</button>
-          <button class="icon-btn del" onclick="deleteExpiration(${e._idx})" title="Remove">🗑</button>
+          <button class="icon-btn edit" onclick="startEditExpiration(${e._idx})" title="Extend / edit expiry date"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span></button>
+          <button class="icon-btn del" onclick="deleteExpiration(${e._idx})" title="Remove"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 3h8M4.5 3V2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M3 3l.5 8a1 1 0 0 0 1 .9h3a1 1 0 0 0 1-.9L9 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
       </div>
     </div>`;
@@ -1369,14 +1532,6 @@ function renderExpiration() {
 syncStorage();renderSuppliers();renderRecipes();
 document.getElementById('view-date').value=todayStr();
 document.getElementById('del-date').value=todayStr();
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  });
-}
 </script>
 </body>
 </html>
