@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+https://github.com/tsetsoboy-design/storgi2.git<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -95,7 +95,7 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 .del-log-body.open{display:block}
 
 /* storage */
-.storage-row{display:grid;grid-template-columns:56px 1fr 100px 90px 90px 150px;gap:0;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);transition:background .15s}
+.storage-row{display:grid;grid-template-columns:1fr 100px 90px 90px 150px;gap:0;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);transition:background .15s}
 .storage-row:hover{background:var(--bg3)}
 .storage-row:last-child{border-bottom:none}
 .storage-row.priority{border-left:3px solid var(--sherwoodtan)}
@@ -211,10 +211,9 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 
   /* ── storage rows ── */
   .storage-header-row{display:none}
-  .storage-row{grid-template-columns:auto 1fr;gap:6px 10px;padding:10px 8px}
+  .storage-row{grid-template-columns:1fr;gap:6px 0;padding:10px 8px}
   .sr-cell{padding:4px 0}
-  .sr-cell-move{grid-column:1;grid-row:1}
-  .sr-cell-name{grid-column:2;grid-row:1}
+  .sr-cell-name{grid-column:1;grid-row:1}
   .sr-cell-avail,.sr-cell-min,.sr-cell-status,.sr-cell-supplier{
     grid-column:1/3;display:flex;align-items:center;justify-content:space-between;
     padding:6px 0;border-top:1px solid var(--border)
@@ -265,6 +264,15 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 .ic-triangle{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid currentColor}
 .ic-diamond{width:11px;height:11px;border:2px solid currentColor;transform:rotate(45deg)}
 .ic-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+
+
+/* companies */
+.company-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.125rem;margin-bottom:.875rem}
+.company-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.company-name{font-size:15px;font-weight:700}
+.company-detail-row{display:flex;gap:8px;align-items:flex-start;padding:5px 0;font-size:13px;color:var(--text2)}
+.company-detail-row strong{color:var(--text);min-width:80px;flex-shrink:0;font-weight:600}
+.company-empty-field{color:var(--text3);font-style:italic}
 </style>
 </head>
 <body>
@@ -282,6 +290,7 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
   <button class="tab" onclick="go('today',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="2" width="12" height="11" fill="none" stroke="currentColor" stroke-width="1.6" rx="1.5"/><line x1="1" y1="5.5" x2="13" y2="5.5" stroke="currentColor" stroke-width="1.6"/><line x1="4" y1="1" x2="4" y2="3" stroke="currentColor" stroke-width="1.6"/><line x1="10" y1="1" x2="10" y2="3" stroke="currentColor" stroke-width="1.6"/></svg></span> Today Used</button>
   <button class="tab" onclick="go('price',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" rx="2"/><line x1="4" y1="4.5" x2="10" y2="4.5" stroke="currentColor" stroke-width="1.4"/><line x1="4" y1="7" x2="10" y2="7" stroke="currentColor" stroke-width="1.4"/><line x1="4" y1="9.5" x2="7" y2="9.5" stroke="currentColor" stroke-width="1.4"/></svg></span> Price Calculator</button>
   <button class="tab" onclick="go('expiration',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="7" y1="4.5" x2="7" y2="7.5" stroke="currentColor" stroke-width="1.6"/><line x1="7" y1="7.5" x2="9" y2="8.5" stroke="currentColor" stroke-width="1.6"/><line x1="5" y1="1" x2="9" y2="1" stroke="currentColor" stroke-width="1.6"/></svg></span> Expiration</button>
+  <button class="tab" onclick="go('companies',this)"><span class="ic"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="2" width="12" height="11" fill="none" stroke="currentColor" stroke-width="1.6" rx="1"/><line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1.4"/><line x1="4" y1="7.5" x2="10" y2="7.5" stroke="currentColor" stroke-width="1.4"/><line x1="4" y1="10" x2="7.5" y2="10" stroke="currentColor" stroke-width="1.4"/></svg></span> Companies</button>
 </div>
 
 <!-- SUPPLIERS -->
@@ -289,11 +298,35 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
   <div class="card">
     <div class="card-title">Add supplier</div>
     <div class="g3">
-      <div style="grid-column:1/3"><label>Company name</label><input id="s-name" placeholder="e.g. Metro Cash & Carry"></div>
+      <div style="grid-column:1/3">
+        <label>Company name</label>
+        <input id="s-name" list="company-names-list" placeholder="Type or pick a saved company">
+        <datalist id="company-names-list"></datalist>
+      </div>
       <div style="padding-bottom:1px"><button class="btn btn-blue" onclick="addSupplier()" style="width:100%"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="2"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="2"/></svg></span> Add supplier</button></div>
     </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:8px">Start typing to see saved companies, or add a new name. Manage full company details (phone, address, notes) in the Companies tab.</div>
   </div>
   <div id="suppliers-list"></div>
+</div>
+
+<!-- COMPANIES -->
+<div class="pane" id="pane-companies">
+  <div class="card" id="company-form-card">
+    <div class="card-title" id="company-form-label">Add company</div>
+    <div class="g2" style="margin-bottom:10px">
+      <div><label>Company name</label><input id="c-name" placeholder="e.g. Metro Cash & Carry"></div>
+      <div><label>Phone number</label><input id="c-phone" placeholder="e.g. +359 888 000 000"></div>
+    </div>
+    <div style="margin-bottom:10px"><label>Address</label><input id="c-address" placeholder="e.g. 12 Market St, Sofia"></div>
+    <div style="margin-bottom:10px"><label>Email</label><input id="c-email" type="email" placeholder="e.g. orders@metro.com"></div>
+    <div style="margin-bottom:10px"><label>Notes</label><input id="c-notes" placeholder="e.g. delivers Mon/Thu, contact Maria for orders"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-sm" id="company-cancel-btn" style="display:none" onclick="cancelEditCompany()"><span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.8"/></svg></span> Cancel</button>
+      <button class="btn btn-blue btn-sm" onclick="saveCompany()"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.4" rx="1"/><rect x="3" y="1" width="4" height="3" fill="currentColor"/><rect x="3" y="7" width="6" height="3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span> Save company</button>
+    </div>
+  </div>
+  <div id="companies-list"></div>
 </div>
 
 <!-- DELIVERY -->
@@ -357,9 +390,8 @@ hr{border:none;border-top:1px solid var(--border);margin:12px 0}
 <!-- STORAGE -->
 <div class="pane" id="pane-storage">
   <div class="card" style="padding:0;overflow:hidden">
-    <div class="storage-header-row" style="display:grid;grid-template-columns:56px 1fr 100px 90px 90px 150px;gap:0;border-bottom:1px solid var(--border);padding:8px 10px;background:var(--bg3)">
-      <div class="card-title" style="margin:0;font-size:10px">Priority</div>
-      <div class="card-title" style="margin:0;font-size:10px">Product</div>
+    <div class="storage-header-row" style="display:grid;grid-template-columns:1fr 100px 90px 90px 150px;gap:0;border-bottom:1px solid var(--border);padding:8px 10px;background:var(--bg3)">
+      <div class="card-title" style="margin:0;font-size:10px">Product (tap star for priority)</div>
       <div class="card-title" style="margin:0;font-size:10px;text-align:center">Available</div>
       <div class="card-title" style="margin:0;font-size:10px;text-align:center">Min qty</div>
       <div class="card-title" style="margin:0;font-size:10px">Status</div>
@@ -419,8 +451,10 @@ let usedLog    = [];
 let storage    = [];
 let deliveries = [];
 let expirationLog = [];
+let companies  = [];
 let editingRecipe   = -1;
 let editingDelivery = -1; // index of delivery being edited
+let editingCompany  = -1;
 let rowIdx    = 0;
 let delRowIdx = 0;
 
@@ -430,6 +464,7 @@ try { usedLog    = JSON.parse(localStorage.getItem('km_log') || '[]'); } catch(e
 try { storage    = JSON.parse(localStorage.getItem('km_sto') || '[]'); } catch(e){}
 try { deliveries = JSON.parse(localStorage.getItem('km_del') || '[]'); } catch(e){}
 try { expirationLog = JSON.parse(localStorage.getItem('km_exp') || '[]'); } catch(e){}
+try { companies  = JSON.parse(localStorage.getItem('km_com') || '[]'); } catch(e){}
 
 function persist() {
   localStorage.setItem('km_sup',  JSON.stringify(suppliers));
@@ -438,6 +473,7 @@ function persist() {
   localStorage.setItem('km_sto',  JSON.stringify(storage));
   localStorage.setItem('km_del',  JSON.stringify(deliveries));
   localStorage.setItem('km_exp',  JSON.stringify(expirationLog));
+  localStorage.setItem('km_com',  JSON.stringify(companies));
 }
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 function fmtDate(d) { return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
@@ -478,6 +514,16 @@ function statusBadge(item) {
   return `<span class="badge ${cls}">${lbl}</span>`;
 }
 function getStorageItem(supName,prodName) { return storage.find(x=>x.supName===supName&&x.prodName===prodName)||null; }
+// Convert a quantity from one unit to another (used whenever recipe units and storage units differ)
+function convertUnits(qty, fromUnit, toUnit) {
+  if (fromUnit === toUnit) return qty;
+  if (fromUnit === 'g'  && toUnit === 'kg')  return qty / 1000;
+  if (fromUnit === 'kg' && toUnit === 'g')   return qty * 1000;
+  if (fromUnit === 'ml' && toUnit === 'L')   return qty / 1000;
+  if (fromUnit === 'L'  && toUnit === 'ml')  return qty * 1000;
+  // same scale — pass through unchanged (pcs, box, bag)
+  return qty;
+}
 function availBadge(supName,prodName,needed,recipeUnit) {
   const item = getStorageItem(supName,prodName);
   if (!item) return '<span class="badge b-grey">—</span>';
@@ -499,7 +545,7 @@ function go(tab,btn) {
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('pane-'+tab).classList.add('active');
-  ({suppliers:renderSuppliers,delivery:initDeliveryTab,storage:()=>{syncStorage();renderStorage();},recipes:renderRecipes,today:initTodayTab,price:renderPriceCalc,expiration:renderExpiration})[tab]?.();
+  ({suppliers:renderSuppliers,delivery:initDeliveryTab,storage:()=>{syncStorage();renderStorage();},recipes:renderRecipes,today:initTodayTab,price:renderPriceCalc,expiration:renderExpiration,companies:renderCompanies})[tab]?.();
 }
 
 /* ══ SUPPLIERS ══ */
@@ -507,7 +553,12 @@ function addSupplier() {
   const name = document.getElementById('s-name').value.trim();
   if (!name) { alert('Enter a company name.'); return; }
   if (suppliers.find(s=>s.name.toLowerCase()===name.toLowerCase())) { alert('Already exists.'); return; }
-  suppliers.push({name,products:[]}); persist();
+  suppliers.push({name,products:[]});
+  // auto-create a bare company record if this name doesn't exist yet in Companies
+  if (!companies.find(c=>c.name.toLowerCase()===name.toLowerCase())) {
+    companies.push({name, phone:'', address:'', email:'', notes:''});
+  }
+  persist();
   document.getElementById('s-name').value='';
   renderSuppliers();
 }
@@ -526,6 +577,97 @@ function addProduct(si) {
 }
 function deleteProduct(si,pi) {
   suppliers[si].products.splice(pi,1); syncStorage(); renderSuppliers();
+}
+
+/* ══ COMPANIES ══ */
+function saveCompany() {
+  const name    = document.getElementById('c-name').value.trim();
+  const phone   = document.getElementById('c-phone').value.trim();
+  const address = document.getElementById('c-address').value.trim();
+  const email   = document.getElementById('c-email').value.trim();
+  const notes   = document.getElementById('c-notes').value.trim();
+  if (!name) { alert('Enter a company name.'); return; }
+
+  if (editingCompany >= 0) {
+    const oldName = companies[editingCompany].name;
+    companies[editingCompany] = { name, phone, address, email, notes };
+    // keep linked supplier name in sync if it changed
+    if (oldName !== name) {
+      const sup = suppliers.find(s => s.name === oldName);
+      if (sup) sup.name = name;
+      deliveries.forEach(d => { if (d.supName === oldName) d.supName = name; });
+      storage.forEach(s => { if (s.supName === oldName) s.supName = name; });
+      recipes.forEach(r => r.ingredients.forEach(ing => { if (ing.supplier === oldName) ing.supplier = name; }));
+    }
+    editingCompany = -1;
+  } else {
+    if (companies.find(c => c.name.toLowerCase() === name.toLowerCase())) { alert('A company with this name already exists.'); return; }
+    companies.push({ name, phone, address, email, notes });
+  }
+  persist();
+  cancelEditCompany();
+  renderCompanies();
+  renderCompanyDatalist();
+}
+function cancelEditCompany() {
+  editingCompany = -1;
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-phone').value = '';
+  document.getElementById('c-address').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-notes').value = '';
+  document.getElementById('company-form-label').textContent = 'Add company';
+  document.getElementById('company-cancel-btn').style.display = 'none';
+}
+function editCompany(i) {
+  const c = companies[i];
+  editingCompany = i;
+  document.getElementById('c-name').value = c.name;
+  document.getElementById('c-phone').value = c.phone || '';
+  document.getElementById('c-address').value = c.address || '';
+  document.getElementById('c-email').value = c.email || '';
+  document.getElementById('c-notes').value = c.notes || '';
+  document.getElementById('company-form-label').innerHTML = '<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span> Editing: ' + c.name;
+  document.getElementById('company-cancel-btn').style.display = '';
+  document.getElementById('company-form-card').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+function deleteCompany(i) {
+  const c = companies[i];
+  const linkedSupplier = suppliers.find(s => s.name === c.name);
+  const msg = linkedSupplier
+    ? `"${c.name}" is also an active supplier. Delete the company record only? (supplier + its products stay untouched)`
+    : `Delete company "${c.name}"?`;
+  if (!confirm(msg)) return;
+  if (editingCompany === i) cancelEditCompany();
+  companies.splice(i,1);
+  persist();
+  renderCompanies();
+  renderCompanyDatalist();
+}
+function renderCompanies() {
+  const list = document.getElementById('companies-list');
+  if (!companies.length) { list.innerHTML = '<div class="empty">No companies yet. Add one above.</div>'; return; }
+  list.innerHTML = companies.map((c,i) => {
+    const isSupplier = suppliers.some(s => s.name === c.name);
+    return `
+    <div class="company-card">
+      <div class="company-head">
+        <div class="company-name">
+          <span class="ic"><svg width="13" height="13" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" rx="2"/><line x1="1" y1="5" x2="13" y2="5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+          ${c.name}
+          ${isSupplier ? '<span class="badge b-green" style="margin-left:8px">Active supplier</span>' : ''}
+        </div>
+        <div style="display:flex;gap:4px">
+          <button class="icon-btn edit" onclick="editCompany(${i})" title="Edit"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span></button>
+          <button class="icon-btn del" onclick="deleteCompany(${i})" title="Delete"><span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 3h8M4.5 3V2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M3 3l.5 8a1 1 0 0 0 1 .9h3a1 1 0 0 0 1-.9L9 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+      </div>
+      <div class="company-detail-row"><strong>Phone</strong> ${c.phone ? c.phone : '<span class="company-empty-field">not set</span>'}</div>
+      <div class="company-detail-row"><strong>Address</strong> ${c.address ? c.address : '<span class="company-empty-field">not set</span>'}</div>
+      <div class="company-detail-row"><strong>Email</strong> ${c.email ? c.email : '<span class="company-empty-field">not set</span>'}</div>
+      <div class="company-detail-row"><strong>Notes</strong> ${c.notes ? c.notes : '<span class="company-empty-field">not set</span>'}</div>
+    </div>`;
+  }).join('');
 }
 
 /* inline edit product */
@@ -589,7 +731,13 @@ function saveEditProduct(si,pi) {
 }
 function cancelEditProduct(si,pi) { renderSuppliers(); }
 
+function renderCompanyDatalist() {
+  const dl = document.getElementById('company-names-list');
+  if (!dl) return;
+  dl.innerHTML = companies.map(c => `<option value="${c.name}"></option>`).join('');
+}
 function renderSuppliers() {
+  renderCompanyDatalist();
   const c = document.getElementById('suppliers-list');
   if (!suppliers.length) { c.innerHTML='<div class="empty">No suppliers yet.</div>'; return; }
   c.innerHTML = suppliers.map((s,si)=>`
@@ -770,7 +918,7 @@ function saveDelivery() {
     });
     deliveries[editingDelivery]={id:old.id,supName,date,docNo,items,totalExcl,totalIncl};
     editingDelivery=-1;
-    document.getElementById('save-del-btn').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save delivery & update storage';
+    document.getElementById('save-del-btn').innerHTML='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save delivery & update storage';
   } else {
     deliveries.unshift({id:Date.now(),supName,date,docNo,items,totalExcl,totalIncl});
   }
@@ -804,7 +952,7 @@ function editDelivery(i) {
   document.getElementById('del-no-supplier').style.display='none';
   d.items.forEach(it=>addDelProdRow(it));
   updateDeliveryTotals();
-  document.getElementById('save-del-btn').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Update delivery';
+  document.getElementById('save-del-btn').innerHTML='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Update delivery';
   // scroll to form
   document.querySelector('#pane-delivery .card').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -824,7 +972,7 @@ function clearDeliveryForm() {
   document.getElementById('del-totals').style.display='none';
   document.getElementById('del-add-prod-btn').style.display='none';
   document.getElementById('del-no-supplier').style.display='';
-  document.getElementById('save-del-btn').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save delivery & update storage';
+  document.getElementById('save-del-btn').innerHTML='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Save delivery & update storage';
 }
 
 function toggleDelLog(id) {
@@ -879,26 +1027,40 @@ function renderDeliveryLog() {
 }
 
 /* ══ STORAGE ══ */
-function moveStorageItem(idx,dir){
-  const ni=idx+dir; if(ni<0||ni>=storage.length)return;
-  [storage[idx],storage[ni]]=[storage[ni],storage[idx]]; persist(); renderStorage();
-}
 function togglePriority(idx){storage[idx].priority=!storage[idx].priority;persist();renderStorage();}
-function updateStorageQty(idx,val){storage[idx].qty=parseFloat(val)||0;persist();}
-function updateStorageMin(idx,val){storage[idx].minQty=parseFloat(val)||0;persist();}
+
+// Live-update just the qty/min value in memory (no persist, no re-render) so typing stays smooth.
+function updateStorageQtyLive(idx,val){ storage[idx].qty = parseFloat(val) || 0; refreshStorageRowStatus(idx); }
+function updateStorageMinLive(idx,val){ storage[idx].minQty = parseFloat(val) || 0; refreshStorageRowStatus(idx); }
+
+// Update only this row's status badge + row priority class in place, without touching the input the user is typing in.
+function refreshStorageRowStatus(idx){
+  const item = storage[idx];
+  const badgeEl = document.querySelector(`.sr-status-badge[data-idx="${idx}"]`);
+  if (badgeEl) badgeEl.innerHTML = statusBadge(item);
+}
+
+// Persist + full re-sort/re-render only happens once the user leaves the field.
+function commitStorageChange(){ persist(); renderStorage(); }
+
 function renderStorage(){
   const list=document.getElementById('storage-list');
   if(!storage.length){list.innerHTML='<div class="empty">No products yet — add them in Suppliers.</div>';return;}
-  list.innerHTML=storage.map((item,i)=>`
+
+  // Auto-sort: lowest stock first (red), then medium (amber), then no-min-set (grey), then good (green) last.
+  // Within each status group, priority items come first, and original relative order is preserved otherwise.
+  const order = { red: 0, amber: 1, grey: 2, green: 3 };
+  const indexed = storage.map((item, originalIdx) => ({ item, originalIdx, status: getStatus(item) }));
+  indexed.sort((a, b) => {
+    if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
+    if (a.item.priority !== b.item.priority) return a.item.priority ? -1 : 1;
+    return a.originalIdx - b.originalIdx;
+  });
+
+  list.innerHTML=indexed.map(({item, originalIdx: i})=>`
     <div class="${item.priority?'storage-row priority':'storage-row'}">
-      <div class="sr-cell sr-cell-move">
-        <div class="sr-move">
-          <button class="icon-btn move" onclick="moveStorageItem(${i},-1)" style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="5,1 9,8 1,8" fill="currentColor"/></svg></span></button>
-          <button class="icon-btn move" onclick="moveStorageItem(${i},1)"  style="padding:1px 5px;font-size:11px"><span class="ic"><svg width="9" height="9" viewBox="0 0 10 10"><polygon points="1,2 9,2 5,9" fill="currentColor"/></svg></span></button>
-        </div>
-      </div>
       <div class="sr-cell sr-cell-name" style="display:flex;align-items:center;gap:8px">
-        <button class="icon-btn" onclick="togglePriority(${i})" style="font-size:18px;padding:0 2px">
+        <button class="icon-btn" onclick="togglePriority(${i})" style="font-size:18px;padding:0 2px" title="Mark as priority">
           ${item.priority?'<span class="ic" style="color:var(--sherwoodtan)"><svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 13,7 7,13 1,7" fill="currentColor"/></svg></span>':'<span class="ic" style="color:var(--text3)"><svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 13,7 7,13 1,7" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>'}
         </button>
         <div>
@@ -910,7 +1072,7 @@ function renderStorage(){
         <span class="m-lbl">Available</span>
         <span class="sr-control">
           <input type="number" class="qty-inp-storage" value="${item.qty}" min="0" step="0.01"
-            oninput="updateStorageQty(${i},this.value)" onblur="renderStorage()">
+            oninput="updateStorageQtyLive(${i},this.value)" onblur="commitStorageChange()">
           <span class="sr-unit">${item.unit}</span>
         </span>
       </div>
@@ -918,13 +1080,13 @@ function renderStorage(){
         <span class="m-lbl">Min qty</span>
         <span class="sr-control">
           <input type="number" class="min-inp" value="${item.minQty}" min="0" step="0.01"
-            oninput="updateStorageMin(${i},this.value)" onblur="renderStorage()">
+            oninput="updateStorageMinLive(${i},this.value)" onblur="commitStorageChange()">
           <span class="sr-unit">${item.unit}</span>
         </span>
       </div>
       <div class="sr-cell sr-cell-status">
         <span class="m-lbl">Status</span>
-        ${statusBadge(item)}
+        <span class="sr-status-badge" data-idx="${i}">${statusBadge(item)}</span>
       </div>
       <div class="sr-cell sr-cell-supplier">
         <span class="m-lbl">Supplier</span>
@@ -1003,7 +1165,7 @@ function editRecipe(i){
   const r=recipes[i];editingRecipe=i;
   document.getElementById('r-name').value=r.name;document.getElementById('r-portions').value=r.portions;
   document.getElementById('ing-rows').innerHTML='';r.ingredients.forEach(ing=>addIngRow(ing));
-  document.getElementById('recipe-form-label').textContent='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span> Editing: '+r.name;
+  document.getElementById('recipe-form-label').innerHTML='<span class="ic"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8.5 1.5l2 2L4 10l-2.5.5L2 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span> Editing: '+r.name;
   document.getElementById('recipe-cancel').style.display='';
   document.getElementById('recipe-form-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -1031,16 +1193,6 @@ function updateScale(i){
   if(lbl)lbl.innerHTML=target===r.portions?`${r.portions} portion${r.portions!==1?'s':''} (base)`:`Scaled: ${r.portions} &rarr; ${target} portions`;
 }
 function resetScale(i){document.getElementById('scale-'+i).value=recipes[i].portions;updateScale(i);}
-// Convert a quantity from recipeUnit to storageUnit for stock calculations
-function convertUnits(qty, fromUnit, toUnit) {
-  if (fromUnit === toUnit) return qty;
-  if (fromUnit === 'g'  && toUnit === 'kg')  return qty / 1000;
-  if (fromUnit === 'kg' && toUnit === 'g')   return qty * 1000;
-  if (fromUnit === 'ml' && toUnit === 'L')   return qty / 1000;
-  if (fromUnit === 'L'  && toUnit === 'ml')  return qty * 1000;
-  // same scale — pass through unchanged (pcs, box, bag)
-  return qty;
-}
 
 function sendToToday(i){
   const r=recipes[i],target=getTarget(i),date=todayStr();
@@ -1260,20 +1412,7 @@ function getDeliveryPrice(supName, prodName) {
   return null;
 }
 
-// Convert qty from recipeUnit to deliveryUnit so we can calculate cost correctly
-// e.g. recipe needs 50g, delivery unit is kg <span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="6" x2="10" y2="6" stroke="currentColor" stroke-width="1.8"/><path d="M7 2l3 4-3 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> convert 50g to 0.05kg
-function convertToDeliveryUnit(qty, recipeUnit, deliveryUnit) {
-  if (recipeUnit === deliveryUnit) return qty;
-  // weight conversions
-  if (recipeUnit === 'g'  && deliveryUnit === 'kg')  return qty / 1000;
-  if (recipeUnit === 'kg' && deliveryUnit === 'g')   return qty * 1000;
-  // volume conversions
-  if (recipeUnit === 'ml' && deliveryUnit === 'L')   return qty / 1000;
-  if (recipeUnit === 'L'  && deliveryUnit === 'ml')  return qty * 1000;
-  // same family but different scale — best effort passthrough
-  return qty;
-}
-
+// (Price Calculator unit conversion now reuses the shared convertUnits() function above.)
 function renderPriceCalc() {
   const list = document.getElementById('price-calc-list');
   if (!recipes.length) {
@@ -1288,7 +1427,7 @@ function renderPriceCalc() {
       let deliveryNote = '<span style="font-size:10px;color:var(--text3)">no delivery price</span>';
       if (delPrice) {
         // convert recipe unit to delivery unit to get correct ratio
-        const recipeQtyInDelUnit = convertToDeliveryUnit(1, ing.unit, delPrice.unit);
+        const recipeQtyInDelUnit = convertUnits(1, ing.unit, delPrice.unit);
         pricePerRecipeUnit = delPrice.pricePerUnit * recipeQtyInDelUnit;
         const unitLabel = delPrice.unit;
         const ppu = (delPrice.priceFixed / delPrice.deliveredQty).toFixed(4);
@@ -1372,7 +1511,7 @@ function importDeliveryPrices(ri) {
   r.ingredients.forEach((ing, ii) => {
     const delPrice = getDeliveryPrice(ing.supplier, ing.product);
     if (!delPrice) return;
-    const recipeQtyInDelUnit = convertToDeliveryUnit(1, ing.unit, delPrice.unit);
+    const recipeQtyInDelUnit = convertUnits(1, ing.unit, delPrice.unit);
     const pricePerRecipeUnit = delPrice.pricePerUnit * recipeQtyInDelUnit;
     const inp = document.getElementById(`pc-price-${ri}-${ii}`);
     if (inp) inp.value = pricePerRecipeUnit.toFixed(6);
@@ -1411,9 +1550,9 @@ function recalcPc(ri) {
 
   if (totalEl) totalEl.textContent = anyFilled ? '€' + total.toFixed(2) : '—';
   if (perEl)   perEl.textContent   = anyFilled && targetPortions > 0 ? '€' + (total / targetPortions).toFixed(3) : '—';
-  if (subEl)   subEl.textContent   = targetPortions === r.portions
+  if (subEl)   subEl.innerHTML     = targetPortions === r.portions
     ? `${r.portions} portion${r.portions!==1?'s':''} (base)`
-    : `Scaled: ${r.portions} <span class="ic"><svg width="11" height="11" viewBox="0 0 12 12"><line x1="2" y1="6" x2="10" y2="6" stroke="currentColor" stroke-width="1.8"/><path d="M7 2l3 4-3 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> ${targetPortions} portions`;
+    : `Scaled: ${r.portions} &rarr; ${targetPortions} portions`;
 }
 
 function resetPc(ri) {
